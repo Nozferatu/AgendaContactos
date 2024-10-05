@@ -71,7 +71,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Ayuda">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#mostrarInfoApp" text="Sobre Agenda de Contactos" />
             </items>
           </Menu>
         </menus>

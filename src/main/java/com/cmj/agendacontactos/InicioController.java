@@ -6,10 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.File;
-import java.io.IOException;
 
 public class InicioController {
     @FXML
@@ -119,5 +120,15 @@ public class InicioController {
             Alert alert = new Alert(Alert.AlertType.ERROR, "La agenda está vacía.");
             alert.show();
         }
+    }
+
+    public void mostrarInfoApp(ActionEvent actionEvent){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Información sobre Agenda de Contactos");
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(new File(HelloApplication.resourcesPath + "/agenda-icon.png").toURI().toString()));
+        alert.setHeaderText("Agenda de Contactos");
+        alert.setContentText("Versión: 1.0\nAutor: Carlos Madrid Jiménez");
+        alert.show();
     }
 }

@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
-    String resourcesPath = "src/main/resources/com/cmj/agendacontactos";
+    static String resourcesPath = "src/main/resources/com/cmj/agendacontactos";
 
     @Override
     public void start(Stage stage) throws IOException {
