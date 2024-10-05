@@ -42,7 +42,7 @@ public class InicioController {
         Button botonLetra;
         String letra;
 
-        int fila = 0;
+        int fila;
         int maxFila = gridLetrasBusqueda.getRowCount() - 1;
         int columna = 0;
         //int maxColumna = gridLetrasBusqueda.getColumnCount();
@@ -76,7 +76,7 @@ public class InicioController {
         inputTelefono.setText(p.getTelefono());
     }
 
-    public void guardarContacto(ActionEvent actionEvent) {
+    public void guardarContacto() {
         if (!inputNombre.getText().isEmpty()) {
             Persona p = new Persona(inputNombre.getText(), inputApellidos.getText(), inputEmail.getText(), inputTelefono.getText());
             System.out.println(p);
@@ -120,7 +120,7 @@ public class InicioController {
         actualizarListaContactos(true, letra);
     }
 
-    public void guardarAgenda(ActionEvent actionEvent) {
+    public void guardarAgenda() {
         if(!personas.devolverPersonas().isEmpty()){
             personaDA.guardarContactos(personas);
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Agenda guardada correctamente.");
@@ -131,7 +131,7 @@ public class InicioController {
         }
     }
 
-    public void cargarAgenda(ActionEvent actionEvent) {
+    public void cargarAgenda() {
         try {
             personas = personaDA.cargarContactos();
             actualizarListaContactos();
@@ -141,7 +141,7 @@ public class InicioController {
         }
     }
 
-    public void borrarAgenda(ActionEvent actionEvent) {
+    public void borrarAgenda() {
         personas.borrarPersonas();
 
         File archivo = new File(nombreArchivo);
@@ -155,13 +155,13 @@ public class InicioController {
         actualizarListaContactos();
     }
 
-    public void confirmarBorrarAgenda(ActionEvent actionEvent) {
+    public void confirmarBorrarAgenda() {
         if(!personas.devolverPersonas().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "¿Desea borrar su agenda?", ButtonType.YES, ButtonType.NO);
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {
-                borrarAgenda(actionEvent);
+                borrarAgenda();
             }
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR, "La agenda está vacía.");
@@ -169,7 +169,7 @@ public class InicioController {
         }
     }
 
-    public void mostrarInfoApp(ActionEvent actionEvent){
+    public void mostrarInfoApp(){
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Información sobre Agenda de Contactos");
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
