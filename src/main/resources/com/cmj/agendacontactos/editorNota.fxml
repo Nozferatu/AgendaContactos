@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cmj.agendacontactos.EditorNotaController">
+   <children>
+      <GridPane layoutX="40.0" layoutY="40.0" prefHeight="530.0" prefWidth="700.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="349.0" minWidth="10.0" prefWidth="160.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="574.0" minWidth="10.0" prefWidth="550.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="260.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="489.0" minHeight="10.0" prefHeight="485.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="50.0" prefWidth="160.0" text="Título" GridPane.valignment="TOP">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <Label prefHeight="50.0" prefWidth="160.0" text="Contenido" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <TextArea fx:id="tituloArea" prefHeight="190.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding></TextArea>
+            <TextField fx:id="contenidoArea" prefHeight="475.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding></TextField>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

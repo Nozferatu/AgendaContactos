@@ -1,6 +1,7 @@
 package com.cmj.agendacontactos.dominio;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Persona implements Serializable {
@@ -9,6 +10,7 @@ public class Persona implements Serializable {
     private String apellidos;
     private String email;
     private String telefono;
+    private HashMap<String, Nota> notas;
 
     public Persona(String nombre, String apellidos, String email, String telefono){
         this.nombre = nombre;
@@ -17,9 +19,7 @@ public class Persona implements Serializable {
         this.telefono = telefono;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getNombre() { return nombre; }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -48,6 +48,14 @@ public class Persona implements Serializable {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
+    public void agregarNota(Nota nota){
+        String titulo = nota.getTitulo();
+        if(!notas.containsKey(titulo)) notas.put(titulo, nota);
+        else notas.replace(titulo, nota);
+    }
+
+    public HashMap<String, Nota> getNotas() { return notas; }
 
     @Override
     public String toString() {

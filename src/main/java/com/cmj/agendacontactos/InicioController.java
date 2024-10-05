@@ -4,7 +4,10 @@ import com.cmj.agendacontactos.dominio.*;
 import com.cmj.agendacontactos.datos.PersonaDataAccess;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 
 public class InicioController {
@@ -31,6 +35,10 @@ public class InicioController {
     @FXML
     private VBox contactos;
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
     @FXML
     GridPane gridLetrasBusqueda;
     String letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ#";
@@ -44,16 +52,16 @@ public class InicioController {
         String letra;
 
         int fila;
-        int maxFila = gridLetrasBusqueda.getRowCount() - 1;
+        int maxFila = gridLetrasBusqueda.getRowCount();
         int columna = 0;
 
 
         for(int i = 0; i < letras.length(); i++){
             fila = i;
-            if(i == maxFila + 1) {
+            if(i == maxFila) {
                 columna = 1;
             }
-            if(columna == 1) fila = i - maxFila - 1;
+            if(columna == 1) fila = i - maxFila;
 
             letra = "" + letras.charAt(i);
             botonLetra = new Button();
@@ -90,6 +98,36 @@ public class InicioController {
         }
     }
 
+    public void abrirEditorNotas(ActionEvent actionEvent){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("editorNota.fxml"));
+
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        EditorNotaController editorNotaController = loader.getController();
+        MenuItem item = (MenuItem) actionEvent.getSource();
+        String accion = item.getId();
+        Persona p = personas.devolverPersona((String) item.getUserData());
+
+        switch(accion){
+            case "agregarNota":
+                editorNotaController.cargarDatosNota("", "");
+                break;
+            case "verNotas":
+                if(!p.getNotas().isEmpty()){
+
+                }
+        }
+
+        stage = (Stage) item.getParentPopup().getOwnerWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void actualizarListaContactos(){
         actualizarListaContactos(false, ' ');
     }
@@ -100,6 +138,9 @@ public class InicioController {
         Collection<Persona> personasAux;
         Button contacto;
         String nombre;
+        ContextMenu contextMenu;
+        MenuItem itemAgregarNota;
+        MenuItem itemVerNotas;
 
         if(filtrar && letra != '#') personasAux = personas.devolverPersonaSegunLetra(letra);
         else personasAux = personas.devolverPersonas();
@@ -111,6 +152,20 @@ public class InicioController {
             contacto.setUserData(nombre);
             contacto.setPrefWidth(180);
             contacto.setOnAction(this::cargarDatos);
+
+            contextMenu = new ContextMenu();
+            itemAgregarNota = new MenuItem("Agregar nota");
+            itemAgregarNota.setId("agregarNota");
+            itemAgregarNota.setUserData(nombre);
+            itemAgregarNota.setOnAction(this::abrirEditorNotas);
+            itemVerNotas = new MenuItem("Ver notas");
+            itemVerNotas.setId("verNotas");
+            itemVerNotas.setUserData(nombre);
+            itemVerNotas.setOnAction(this::abrirEditorNotas);
+
+            contextMenu.getItems().addAll(itemAgregarNota, itemVerNotas);
+            contacto.setContextMenu(contextMenu);
+
             contactos.getChildren().add(contacto);
         }
     }

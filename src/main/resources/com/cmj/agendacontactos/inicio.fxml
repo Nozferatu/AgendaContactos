@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane id="inicio" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cmj.agendacontactos.InicioController">
+<AnchorPane id="inicio" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cmj.agendacontactos.InicioController">
    <children>
       <ScrollPane layoutX="407.0" layoutY="264.0" prefHeight="469.0" prefWidth="173.0">
          <content>
@@ -99,4 +99,4 @@
         </rowConstraints>
       </GridPane>
    </children>
-</Pane>
+</AnchorPane>
