@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -174,6 +175,10 @@ public class InicioController {
         alert.setTitle("Información sobre Agenda de Contactos");
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(new File(HelloApplication.resourcesPath + "/agenda-icon.png").toURI().toString()));
+        ImageView iconoHeader = new ImageView(new Image(new File(HelloApplication.resourcesPath + "/agenda-icon.png").toURI().toString()));
+        iconoHeader.setFitHeight(48);
+        iconoHeader.setFitWidth(48);
+        alert.getDialogPane().setGraphic(iconoHeader);
         alert.setHeaderText("Agenda de Contactos");
         alert.setContentText("Versión: 1.0\nAutor: Carlos Madrid Jiménez");
         alert.show();
