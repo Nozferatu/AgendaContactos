@@ -75,6 +75,8 @@ public class InicioController {
     public void guardarAgenda(ActionEvent actionEvent) {
         if(!personas.devolverPersonas().isEmpty()){
             personaDA.guardarContactos(personas);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Agenda guardada correctamente.");
+            alert.show();
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR, "No hay ningún contacto añadido.");
             alert.show();
