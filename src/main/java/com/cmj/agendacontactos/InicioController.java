@@ -22,15 +22,13 @@ public class InicioController {
     private TextArea inputTelefono;
 
     @FXML
-    private Label mensajeGuardarArchivo;
-    @FXML
-    private Label mensajeBorrarAgenda;
+    private Label mensajeGuardarContacto;
 
     @FXML
     private VBox contactos;
 
     ListaPersonas personas = new ListaPersonas();
-    String nombreArchivo = "personas.dat";
+    String nombreArchivo = "agenda.dat";
     PersonaDataAccess personaDA = new PersonaDataAccess("./" + nombreArchivo);
 
     public void cargarDatos(ActionEvent actionEvent) {
@@ -51,10 +49,10 @@ public class InicioController {
             System.out.println(p);
 
             personas.agregarPersona(p);
-            mensajeGuardarArchivo.setText("");
+            mensajeGuardarContacto.setText("");
             actualizarListaContactos();
         } else {
-            mensajeGuardarArchivo.setText("El nombre no puede estar vacío");
+            mensajeGuardarContacto.setText("El nombre no puede estar vacío");
         }
     }
 
@@ -74,17 +72,36 @@ public class InicioController {
         }
     }
 
-    public void guardarArchivo(ActionEvent actionEvent) {
-        personaDA.guardarContactos(personas);
+    public void guardarAgenda(ActionEvent actionEvent) {
+        if(!personas.devolverPersonas().isEmpty()){
+            personaDA.guardarContactos(personas);
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No hay ningún contacto añadido.");
+            alert.show();
+        }
     }
 
-    public void cargarArchivo(ActionEvent actionEvent) {
-        personas = personaDA.cargarContactos();
-        actualizarListaContactos();
+    public void cargarAgenda(ActionEvent actionEvent) {
+        try {
+            personas = personaDA.cargarContactos();
+            actualizarListaContactos();
+        } catch (RuntimeException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "No hay ningún archivo de agenda.");
+            alert.show();
+        }
     }
 
     public void borrarAgenda(ActionEvent actionEvent) {
         personas.borrarPersonas();
+
+        File archivo = new File(nombreArchivo);
+        if (archivo.exists()) {
+            archivo.delete();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "La agenda está vacía.");
+            alert.show();
+        }
+
         actualizarListaContactos();
     }
 
@@ -97,17 +114,8 @@ public class InicioController {
                 borrarAgenda(actionEvent);
             }
         }else{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "La agenda está vacía.");
+            Alert alert = new Alert(Alert.AlertType.ERROR, "La agenda está vacía.");
             alert.show();
-        }
-    }
-
-    public void borrarArchivo(ActionEvent actionEvent) {
-        File archivo = new File(nombreArchivo);
-        if (archivo.exists()) {
-            archivo.delete();
-        } else {
-            mensajeBorrarAgenda.setText("No existe ningún archivo");
         }
     }
 }
