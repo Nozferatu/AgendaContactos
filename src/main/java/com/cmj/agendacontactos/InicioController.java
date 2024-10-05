@@ -174,8 +174,9 @@ public class InicioController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Información sobre Agenda de Contactos");
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(new File(HelloApplication.resourcesPath + "/agenda-icon.png").toURI().toString()));
-        ImageView iconoHeader = new ImageView(new Image(new File(HelloApplication.resourcesPath + "/agenda-icon.png").toURI().toString()));
+        Image iconoAgenda = new Image(new File(HelloApplication.resourcesPath + "/agenda-icon.png").toURI().toString());
+        stage.getIcons().add(iconoAgenda);
+        ImageView iconoHeader = new ImageView(iconoAgenda);
         iconoHeader.setFitHeight(48);
         iconoHeader.setFitWidth(48);
         alert.getDialogPane().setGraphic(iconoHeader);
