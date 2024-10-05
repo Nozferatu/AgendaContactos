@@ -1,6 +1,7 @@
 package com.cmj.agendacontactos.dominio;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -25,6 +26,16 @@ public class ListaPersonas implements Serializable {
 
     public Persona devolverPersona(String nombre){
         return personas.get(nombre);
+    }
+
+    public Collection<Persona> devolverPersonaSegunLetra(char letra){
+        Collection<Persona> personasFiltradas = new ArrayList<>();
+
+        for(Persona p: personas.values()){
+            if(p.getNombre().toLowerCase().charAt(0) == letra) personasFiltradas.add(p);
+        }
+
+        return personasFiltradas;
     }
 
     public Collection<Persona> devolverPersonas(){

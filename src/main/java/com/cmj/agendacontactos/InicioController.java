@@ -7,10 +7,12 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.Collection;
 
 public class InicioController {
     @FXML
@@ -28,9 +30,39 @@ public class InicioController {
     @FXML
     private VBox contactos;
 
+    @FXML
+    GridPane gridLetrasBusqueda;
+    String letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+
     ListaPersonas personas = new ListaPersonas();
     String nombreArchivo = "agenda.dat";
     PersonaDataAccess personaDA = new PersonaDataAccess("./" + nombreArchivo);
+
+    public void initialize(){
+        Button botonLetra;
+        String letra;
+
+        int fila = 0;
+        int maxFila = gridLetrasBusqueda.getRowCount() - 1;
+        int columna = 0;
+        //int maxColumna = gridLetrasBusqueda.getColumnCount();
+
+        for(int i = 0; i < letras.length(); i++){
+            fila = i;
+            if(i == maxFila) {
+                columna = 1;
+            }
+            if(columna == 1) fila = i - maxFila;
+
+            letra = "" + letras.charAt(i);
+            botonLetra = new Button();
+            botonLetra.setText(letra);
+            botonLetra.setUserData(letra);
+            botonLetra.setPrefWidth(40);
+            botonLetra.setOnAction(this::buscarPorLetra);
+            gridLetrasBusqueda.add(botonLetra, columna, fila);
+        }
+    }
 
     public void cargarDatos(ActionEvent actionEvent) {
         Node node = (Node) actionEvent.getSource();
@@ -57,12 +89,21 @@ public class InicioController {
         }
     }
 
-    public void actualizarListaContactos() {
+    public void actualizarListaContactos(){
+        actualizarListaContactos(false, ' ');
+    }
+
+    public void actualizarListaContactos(boolean filtrar, char letra) {
         contactos.getChildren().clear();
 
+        Collection<Persona> personasAux;
         Button contacto;
         String nombre;
-        for (Persona p : personas.devolverPersonas()) {
+
+        if(filtrar) personasAux = personas.devolverPersonaSegunLetra(letra);
+        else personasAux = personas.devolverPersonas();
+
+        for (Persona p : personasAux) {
             contacto = new Button();
             nombre = p.getNombre();
             contacto.setText(nombre);
@@ -71,6 +112,12 @@ public class InicioController {
             contacto.setOnAction(this::cargarDatos);
             contactos.getChildren().add(contacto);
         }
+    }
+
+    public void buscarPorLetra(ActionEvent actionEvent){
+        Button botonLetra = (Button) actionEvent.getSource();
+        char letra = botonLetra.getText().toLowerCase().charAt(0);
+        actualizarListaContactos(true, letra);
     }
 
     public void guardarAgenda(ActionEvent actionEvent) {
