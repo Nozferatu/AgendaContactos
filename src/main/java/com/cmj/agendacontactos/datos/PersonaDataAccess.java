@@ -43,7 +43,17 @@ public class PersonaDataAccess {
             input.close();
 
             return lista;
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
+            String nombreEx = e.getClass().getSimpleName();
+            switch (nombreEx){
+                case "FileNotFoundException":
+                    throw new RuntimeException("No se ha encontrado el archivo de agenda.");
+                case "EOFException":
+                    throw new RuntimeException("El archivo de agenda no es válido o está corrupto.");
+                default:
+                    throw new RuntimeException(e);
+            }
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

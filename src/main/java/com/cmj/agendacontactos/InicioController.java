@@ -45,7 +45,7 @@ public class InicioController {
         int fila;
         int maxFila = gridLetrasBusqueda.getRowCount() - 1;
         int columna = 0;
-        //int maxColumna = gridLetrasBusqueda.getColumnCount();
+
 
         for(int i = 0; i < letras.length(); i++){
             fila = i;
@@ -136,7 +136,7 @@ public class InicioController {
             personas = personaDA.cargarContactos();
             actualizarListaContactos();
         } catch (RuntimeException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "No hay ningún archivo de agenda.");
+            Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
             alert.show();
         }
     }
