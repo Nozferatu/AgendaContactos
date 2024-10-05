@@ -39,6 +39,8 @@ public class InicioController {
     private Scene scene;
     private Parent root;
 
+    private Scene pantallaEditorNota;
+
     @FXML
     GridPane gridLetrasBusqueda;
     String letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ#";
@@ -71,6 +73,10 @@ public class InicioController {
             botonLetra.setOnAction(this::buscarPorLetra);
             gridLetrasBusqueda.add(botonLetra, columna, fila);
         }
+    }
+
+    public void establecerPantallaEditorNota(Scene scene){
+        pantallaEditorNota = scene;
     }
 
     public void cargarDatos(ActionEvent actionEvent) {
@@ -112,20 +118,20 @@ public class InicioController {
         String accion = item.getId();
         Persona p = personas.devolverPersona((String) item.getUserData());
 
+        editorNotaController.seleccionarPersona(p);
         switch(accion){
             case "agregarNota":
                 editorNotaController.cargarDatosNota("", "");
                 break;
             case "verNotas":
                 if(!p.getNotas().isEmpty()){
-
+                    System.out.println(p.getNotas().values());
                 }
         }
 
-        stage = (Stage) item.getParentPopup().getOwnerWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        stage = (Stage) ((MenuItem) actionEvent.getSource()).getParentPopup().getOwnerWindow();
+        stage.setScene(pantallaEditorNota);
+        //stage.show();
     }
 
     public void actualizarListaContactos(){

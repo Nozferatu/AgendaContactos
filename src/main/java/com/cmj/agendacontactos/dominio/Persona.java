@@ -17,6 +17,7 @@ public class Persona implements Serializable {
         this.apellidos = apellidos;
         this.email = email;
         this.telefono = telefono;
+        notas = new HashMap<>();
     }
 
     public String getNombre() { return nombre; }

@@ -2,6 +2,7 @@ package com.cmj.agendacontactos;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -15,13 +16,25 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("inicio.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1024, 768, Color.ANTIQUEWHITE);
+        //Pantalla principal
+        FXMLLoader inicioLoader = new FXMLLoader(getClass().getResource("inicio.fxml"));
+        Scene principalScene = new Scene(inicioLoader.load(), 1024, 768, Color.ANTIQUEWHITE);
+        InicioController inicioController = (InicioController) inicioLoader.getController();
+
+        //Editor de notas
+        FXMLLoader editorNotasLoader = new FXMLLoader(getClass().getResource("editorNota.fxml"));
+        Scene editorNotaScene = new Scene(editorNotasLoader.load(), 1024, 768, Color.ANTIQUEWHITE);
+        EditorNotaController editorNotaController = (EditorNotaController) editorNotasLoader.getController();
+
+        //Asignando las escenas a los controladores
+        inicioController.establecerPantallaEditorNota(editorNotaScene);
+        editorNotaController.establecerPantallaPrincipal(principalScene);
+
         stage.setResizable(false);
         stage.setTitle("Agenda de Contactos v1");
         Image appIcon = new Image(new File(resourcesPath + "/agenda-icon.png").toURI().toString());
         stage.getIcons().add(appIcon);
-        stage.setScene(scene);
+        stage.setScene(principalScene);
         stage.show();
     }
 
