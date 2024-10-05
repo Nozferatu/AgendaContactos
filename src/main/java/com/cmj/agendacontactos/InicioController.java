@@ -32,7 +32,7 @@ public class InicioController {
 
     @FXML
     GridPane gridLetrasBusqueda;
-    String letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+    String letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ#";
 
     ListaPersonas personas = new ListaPersonas();
     String nombreArchivo = "agenda.dat";
@@ -49,10 +49,10 @@ public class InicioController {
 
         for(int i = 0; i < letras.length(); i++){
             fila = i;
-            if(i == maxFila) {
+            if(i == maxFila + 1) {
                 columna = 1;
             }
-            if(columna == 1) fila = i - maxFila;
+            if(columna == 1) fila = i - maxFila - 1;
 
             letra = "" + letras.charAt(i);
             botonLetra = new Button();
@@ -100,7 +100,7 @@ public class InicioController {
         Button contacto;
         String nombre;
 
-        if(filtrar) personasAux = personas.devolverPersonaSegunLetra(letra);
+        if(filtrar && letra != '#') personasAux = personas.devolverPersonaSegunLetra(letra);
         else personasAux = personas.devolverPersonas();
 
         for (Persona p : personasAux) {
