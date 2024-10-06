@@ -2,27 +2,31 @@ package com.cmj.agendacontactos.datos;
 
 import com.cmj.agendacontactos.dominio.ListaPersonas;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 public class PersonaDataAccess {
-    String nombreArchivo;
+    File archivo;
     FileInputStream fileInput;
     ObjectInputStream input;
 
     FileOutputStream fileOutput;
     ObjectOutputStream output;
 
-    public PersonaDataAccess(String nombreArchivo) {
-        this.nombreArchivo = nombreArchivo;
+    public PersonaDataAccess() {
+        this.archivo = new File(System.getenv("APPDATA") + "\\Agenda de Contactos\\agenda.dat");
+        try {
+            if(!archivo.exists()) {
+                archivo.getParentFile().mkdirs();
+                archivo.createNewFile();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void guardarContactos(ListaPersonas personas){
         try {
-            fileOutput = new FileOutputStream(nombreArchivo);
+            fileOutput = new FileOutputStream(archivo);
             output = new ObjectOutputStream(fileOutput);
 
             output.writeObject(personas);
@@ -35,7 +39,8 @@ public class PersonaDataAccess {
 
     public ListaPersonas cargarContactos(){
         try {
-            fileInput = new FileInputStream(nombreArchivo);
+            fileInput = new FileInputStream(archivo);
+            if(fileInput.available() == 0) throw new RuntimeException("El archivo de agenda está vacío.");
             input = new ObjectInputStream(fileInput);
 
             ListaPersonas lista = (ListaPersonas) input.readObject();
@@ -56,5 +61,13 @@ public class PersonaDataAccess {
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean archivoExiste(){
+        return archivo.exists();
+    }
+
+    public boolean borrarContactos(){
+        return archivo.delete();
     }
 }

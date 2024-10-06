@@ -46,8 +46,7 @@ public class InicioController {
     String letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ#";
 
     ListaPersonas personas = new ListaPersonas();
-    String nombreArchivo = "agenda.dat";
-    PersonaDataAccess personaDA = new PersonaDataAccess("./" + nombreArchivo);
+    PersonaDataAccess personaDA = new PersonaDataAccess();
 
     public void initialize(){
         Button botonLetra;
@@ -125,7 +124,7 @@ public class InicioController {
             case "verNotas":
                 if(!p.getNotas().isEmpty()){
                     List<String> titulos = p.getNotas().keySet().stream().toList();
-                    ChoiceDialog<String> choiceDialog = new ChoiceDialog<>(titulos.getFirst(), titulos);
+                    ChoiceDialog<String> choiceDialog = new ChoiceDialog<>(titulos.get(0), titulos);
 
                     Optional<String> eleccion = choiceDialog.showAndWait();
 
@@ -219,9 +218,9 @@ public class InicioController {
     public void borrarAgenda() {
         personas.borrarPersonas();
 
-        File archivo = new File(nombreArchivo);
-        if (archivo.exists()) {
-            archivo.delete();
+        boolean archivoExiste = personaDA.archivoExiste();
+        if (archivoExiste) {
+            personaDA.borrarContactos();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR, "La agenda está vacía.");
             alert.show();
