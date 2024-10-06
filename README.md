@@ -1,0 +1,1 @@
+Ésto es un proyecto que estoy haciendo para aprender a usar JavaFX. Si tienes algún interés en apoyarlo, no dudes en abrir incidencias si encuentras algún problema o abrir un pull request si crees que hay algo que se podría añadir/cambiar a mejor.
