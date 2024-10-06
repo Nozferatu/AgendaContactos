@@ -7,6 +7,10 @@ public class Nota implements Serializable {
     private String titulo;
     private String contenido;
 
+    public Nota() {
+        this("", "");
+    }
+
     public Nota(String titulo, String contenido) {
         this.titulo = titulo;
         this.contenido = contenido;

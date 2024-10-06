@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
 public class InicioController {
     @FXML
@@ -38,8 +40,6 @@ public class InicioController {
     private Stage stage;
     private Scene scene;
     private Parent root;
-
-    private Scene pantallaEditorNota;
 
     @FXML
     GridPane gridLetrasBusqueda;
@@ -73,10 +73,6 @@ public class InicioController {
             botonLetra.setOnAction(this::buscarPorLetra);
             gridLetrasBusqueda.add(botonLetra, columna, fila);
         }
-    }
-
-    public void establecerPantallaEditorNota(Scene scene){
-        pantallaEditorNota = scene;
     }
 
     public void cargarDatos(ActionEvent actionEvent) {
@@ -117,21 +113,38 @@ public class InicioController {
         MenuItem item = (MenuItem) actionEvent.getSource();
         String accion = item.getId();
         Persona p = personas.devolverPersona((String) item.getUserData());
-
         editorNotaController.seleccionarPersona(p);
+
+        stage = (Stage) item.getParentPopup().getOwnerWindow();
+        stage.setUserData(new Nota());
+
         switch(accion){
             case "agregarNota":
-                editorNotaController.cargarDatosNota("", "");
+                editorNotaController.cargarDatosNota(stage);
                 break;
             case "verNotas":
                 if(!p.getNotas().isEmpty()){
-                    System.out.println(p.getNotas().values());
+                    List<String> titulos = p.getNotas().keySet().stream().toList();
+                    ChoiceDialog<String> choiceDialog = new ChoiceDialog<>(titulos.getFirst(), titulos);
+
+                    Optional<String> eleccion = choiceDialog.showAndWait();
+
+                    if(eleccion.isPresent()){
+                        Nota notaElegida = p.getNotas().get(eleccion.get());
+                        stage.setUserData(notaElegida);
+
+                        editorNotaController.cargarDatosNota(stage);
+                    }
                 }
         }
 
-        stage = (Stage) ((MenuItem) actionEvent.getSource()).getParentPopup().getOwnerWindow();
-        stage.setScene(pantallaEditorNota);
-        //stage.show();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void actualizarPersona(Persona p){
+        personas.agregarPersona(p);
     }
 
     public void actualizarListaContactos(){

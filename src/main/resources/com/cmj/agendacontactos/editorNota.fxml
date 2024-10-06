@@ -27,13 +27,15 @@
                <font>
                   <Font size="18.0" />
                </font></Label>
-            <TextArea fx:id="tituloArea" prefHeight="30.0" prefWidth="545.0" GridPane.columnIndex="1" />
-            <TextField fx:id="contenidoArea" prefHeight="460.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextArea fx:id="tituloArea" prefHeight="30.0" prefWidth="545.0" GridPane.columnIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font></TextArea>
+            <TextField fx:id="contenidoArea" alignment="TOP_LEFT" prefHeight="460.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <padding>
                   <Insets bottom="5.0" top="5.0" />
                </padding></TextField>
-             <Label fx:id="mensajeBotonGuardar" prefHeight="50.0" prefWidth="160.0" text="" textFill="RED"
-                    GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="TOP">
+             <Label fx:id="mensajeBotonGuardar" prefHeight="50.0" prefWidth="160.0" text="" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="TOP">
                  <font>
                      <Font size="18.0" />
                  </font></Label>

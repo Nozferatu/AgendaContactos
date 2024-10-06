@@ -10,23 +10,14 @@ public class ListaPersonas implements Serializable {
 
     private HashMap<String, Persona> personas;
 
-    public ListaPersonas(){
-        personas = new HashMap<>();
-    }
+    public ListaPersonas(){ personas = new HashMap<>(); }
 
     public void agregarPersona(Persona p){
-        if(!personas.containsValue(p)){
-            System.out.println("No existe");
-            personas.put(p.getNombre(), p);
-        }else{
-            System.out.println("Ya existe");
-            personas.replace(p.getNombre(), p);
-        }
+        if (personas.containsValue(p)) personas.replace(p.getNombre(), p);
+        else personas.put(p.getNombre(), p);
     }
 
-    public Persona devolverPersona(String nombre){
-        return personas.get(nombre);
-    }
+    public Persona devolverPersona(String nombre){ return personas.get(nombre); }
 
     public Collection<Persona> devolverPersonaSegunLetra(char letra){
         Collection<Persona> personasFiltradas = new ArrayList<>();
@@ -38,11 +29,7 @@ public class ListaPersonas implements Serializable {
         return personasFiltradas;
     }
 
-    public Collection<Persona> devolverPersonas(){
-        return personas.values();
-    }
+    public Collection<Persona> devolverPersonas(){ return personas.values(); }
 
-    public void borrarPersonas(){
-        personas.clear();
-    }
+    public void borrarPersonas(){ personas.clear(); }
 }

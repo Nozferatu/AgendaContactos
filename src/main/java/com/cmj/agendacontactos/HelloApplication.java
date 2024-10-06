@@ -19,16 +19,6 @@ public class HelloApplication extends Application {
         //Pantalla principal
         FXMLLoader inicioLoader = new FXMLLoader(getClass().getResource("inicio.fxml"));
         Scene principalScene = new Scene(inicioLoader.load(), 1024, 768, Color.ANTIQUEWHITE);
-        InicioController inicioController = (InicioController) inicioLoader.getController();
-
-        //Editor de notas
-        FXMLLoader editorNotasLoader = new FXMLLoader(getClass().getResource("editorNota.fxml"));
-        Scene editorNotaScene = new Scene(editorNotasLoader.load(), 1024, 768, Color.ANTIQUEWHITE);
-        EditorNotaController editorNotaController = (EditorNotaController) editorNotasLoader.getController();
-
-        //Asignando las escenas a los controladores
-        inicioController.establecerPantallaEditorNota(editorNotaScene);
-        editorNotaController.establecerPantallaPrincipal(principalScene);
 
         stage.setResizable(false);
         stage.setTitle("Agenda de Contactos v1");
