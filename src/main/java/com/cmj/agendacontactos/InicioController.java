@@ -45,7 +45,7 @@ public class InicioController {
     GridPane gridLetrasBusqueda;
     String letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ#";
 
-    ListaPersonas personas = new ListaPersonas();
+    static ListaPersonas personas = new ListaPersonas();
     PersonaDataAccess personaDA = new PersonaDataAccess();
 
     public void initialize(){
@@ -120,6 +120,10 @@ public class InicioController {
         switch(accion){
             case "agregarNota":
                 editorNotaController.cargarDatosNota(stage);
+
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
                 break;
             case "verNotas":
                 if(!p.getNotas().isEmpty()){
@@ -133,13 +137,18 @@ public class InicioController {
                         stage.setUserData(notaElegida);
 
                         editorNotaController.cargarDatosNota(stage);
+
+                        scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();
                     }
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "No hay ninguna nota guardada.");
+                    alert.show();
                 }
         }
 
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
     }
 
     public void actualizarPersona(Persona p){
@@ -151,6 +160,7 @@ public class InicioController {
     }
 
     public void actualizarListaContactos(boolean filtrar, char letra) {
+        System.out.println(personas.devolverPersonas());
         contactos.getChildren().clear();
 
         Collection<Persona> personasAux;
